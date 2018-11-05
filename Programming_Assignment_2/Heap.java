@@ -17,6 +17,7 @@ public class Heap {
   //
   // Time Complexity Requirement: theta(n)
 	public void buildHeap(ArrayList<Node> nodes) {
+
 		for (int i=0; i<nodes.size(); i++) {
 			minHeap.add(nodes.get(i));
 //			minHeapify(i);
@@ -24,11 +25,12 @@ public class Heap {
 		}
   	}
 
-	private void minHeapify(int i) {
+	public void minHeapify(int i) {
 		int parent_idx = i/2;
 		int curr_idx = i;
 		while (curr_idx > 0 && minHeap.get(parent_idx).getMinDistance()
 				> minHeap.get(curr_idx).getMinDistance()) {
+
 			swap(curr_idx, parent_idx);
 			curr_idx=parent_idx;
 			parent_idx/=2;
