@@ -5,9 +5,11 @@ import java.util.ArrayList;
 public class Heap {
 
 	private ArrayList<Node> minHeap; // do not remove
+	public ArrayList<Integer> ind;
 
 	public Heap() {
 		minHeap = new ArrayList<Node>(); // do not remove
+		ind = new ArrayList<>();
 	}
 	
 	// buildHeap
@@ -20,8 +22,9 @@ public class Heap {
 
 		for (int i=0; i<nodes.size(); i++) {
 			minHeap.add(nodes.get(i));
-//			minHeapify(i);
-			heapifyDown(i);
+			ind.add(i);
+			minHeapify(i);
+//			heapifyDown(i);
 		}
   	}
 
@@ -40,6 +43,9 @@ public class Heap {
 
 	private void swap(int i, int parent) {
 		Node temp = minHeap.get(parent);
+		int i_temp = parent;
+		ind.set(minHeap.get(parent).getNodeName(),i);
+		ind.set(minHeap.get(i).getNodeName(),i_temp);
 		minHeap.set(parent,minHeap.get(i));
 		minHeap.set(i,temp);
 	}
@@ -62,7 +68,11 @@ public class Heap {
   // Returns the minimum element of the heap
   //
   // Time Complexity Requirement: theta(1)
-	public Node findMin() { return minHeap.get(0); }
+	public Node findMin() {
+		if (minHeap.size()>0)
+			return minHeap.get(0);
+		return null;
+	}
 
 	/**
 	 * extractMin
@@ -77,6 +87,8 @@ public class Heap {
 		Node min = minHeap.get(0);
 		Node last = minHeap.remove(minHeap.size()-1);
 		minHeap.set(0,last);
+		ind.set(last.getNodeName(),0);
+		ind.set(min.getNodeName(),-1);
 		heapifyDown(0);
     	return min;
   }

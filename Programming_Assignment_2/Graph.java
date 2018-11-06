@@ -27,6 +27,7 @@ public class Graph {
         for (int i=0; i<size; i++) {
             check.add(false);
         }
+
         while(size>0) {
             Node extracted_min = minHeap.extractMin();
             check.set(extracted_min.getNodeName(), true);
@@ -58,10 +59,9 @@ public class Graph {
                         adjacent_node.setMinDistance(newKey);
 //                        int index_node = minHeap.index.get(adjacent_node.getNodeName());
 //                        minHeap.toArrayList().get(index_node).setMinDistance(newKey);
-                        s_index = String.valueOf(adjacent_node.getNodeName());
-                        index = minHeap.toString().indexOf(s_index)/2;
-                        minHeap.toArrayList().get(index).setMinDistance(newKey);
-                        minHeap.minHeapify(index);
+//                        s_index = String.valueOf(adjacent_node.getNodeName());
+//                        index = minHeap.toString().indexOf(s_index)/2;
+                        minHeap.minHeapify(minHeap.ind.get(adjacent_node.getNodeName()));
                     }
                 }
             }
@@ -76,11 +76,14 @@ public class Graph {
   // from root to x
     public ArrayList<Node> findAShortestPath(Node root, Node x){
         int[] parent = new int[5];
-        parent[0] = -1;
+        parent[root.getNodeName()] = -1;
         ArrayList<Node> node_dump = new ArrayList<>();
-        for (int i=0; i < minHeap.toArrayList().size(); i++)
-            node_dump.add(minHeap.toArrayList().get(i));
-
+        ArrayList<Integer> node_dump_ind = new ArrayList<>();
+        ArrayList<Node> heap_arr = minHeap.toArrayList();
+        for (int i=0; i < heap_arr.size(); i++) {
+            node_dump_ind.add(minHeap.ind.get(i));
+            node_dump.add(heap_arr.get(i));
+        }
 
         for (int i=0; i<size; i++) {
             check.add(false);
@@ -95,11 +98,16 @@ public class Graph {
                 if (extracted_min.getMinDistance() == Integer.MAX_VALUE)
                     return null;
                 else
-                    return unwindParent(parent, extracted_min.getNodeName(), node_dump);
+                    return unwindParent(parent, extracted_min.getNodeName(), node_dump, node_dump_ind);
 
             for (int i=0; i < extracted_min.getNeighbors().size(); i++) {
                 Node adjacent_node = extracted_min.getNeighbors().get(i);
                 int weight = extracted_min.getWeights().get(i);
+
+                if (adjacent_node.getNodeName() == x.getNodeName()) {
+                    parent[adjacent_node.getNodeName()] = extracted_min.getNodeName();
+                    return unwindParent(parent, adjacent_node.getNodeName(), node_dump, node_dump_ind);
+                }
 
                 if (!check.get(adjacent_node.getNodeName())) {
                     String s_index = String.valueOf(adjacent_node.getNodeName());
@@ -113,10 +121,10 @@ public class Graph {
                         parent[adjacent_node.getNodeName()] = extracted_min.getNodeName();
                         adjacent_node.setMinDistance(newKey);
 
-                        s_index = String.valueOf(adjacent_node.getNodeName());
-                        index = minHeap.toString().indexOf(s_index)/2;
-                        minHeap.toArrayList().get(index).setMinDistance(newKey);
-                        minHeap.minHeapify(index);
+//                        s_index = String.valueOf(adjacent_node.getNodeName());
+//                        index = minHeap.toString().indexOf(s_index)/2;
+//                        minHeap.toArrayList().get(index).setMinDistance(newKey);
+                        minHeap.minHeapify(minHeap.ind.get(adjacent_node.getNodeName()));
                     }
                 }
             }
@@ -125,19 +133,21 @@ public class Graph {
   	  return null;
   }
 
-  private ArrayList<Node> unwindParent(int[] arr, int start, ArrayList<Node> node) {
+  private ArrayList<Node> unwindParent(int[] arr, int start, ArrayList<Node> node, ArrayList<Integer> node_dump_ind) {
       ArrayList<Node> ans = new ArrayList<>();
       if (start == -1)
           return null;
 
       int i=0;
       while (i < node.size()) {
-          ans.add(0, node.get(start));
+          ans.add(0, node.get(node_dump_ind.get(start)));
           start = arr[start];
           i++;
           if (start==-1)
               break;
       }
+      if (ans.get(0).equals(start))
+        Collections.reverse(ans);
       return ans;
   }
   // eachShortestPathLength
