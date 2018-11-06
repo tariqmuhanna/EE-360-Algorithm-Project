@@ -57,10 +57,6 @@ public class Graph {
                     // If distance of node u > node n, update u.d
                     if (currentKey > newKey) {
                         adjacent_node.setMinDistance(newKey);
-//                        int index_node = minHeap.index.get(adjacent_node.getNodeName());
-//                        minHeap.toArrayList().get(index_node).setMinDistance(newKey);
-//                        s_index = String.valueOf(adjacent_node.getNodeName());
-//                        index = minHeap.toString().indexOf(s_index)/2;
                         minHeap.minHeapify(minHeap.ind.get(adjacent_node.getNodeName()));
                     }
                 }
@@ -90,7 +86,6 @@ public class Graph {
         }
         while(size>0) {
             Node extracted_min = minHeap.extractMin();
-//            node_dump.add(extracted_min);
             check.set(extracted_min.getNodeName(), true);
             size--;
 
@@ -120,10 +115,6 @@ public class Graph {
                     if (currentKey > newKey) {
                         parent[adjacent_node.getNodeName()] = extracted_min.getNodeName();
                         adjacent_node.setMinDistance(newKey);
-
-//                        s_index = String.valueOf(adjacent_node.getNodeName());
-//                        index = minHeap.toString().indexOf(s_index)/2;
-//                        minHeap.toArrayList().get(index).setMinDistance(newKey);
                         minHeap.minHeapify(minHeap.ind.get(adjacent_node.getNodeName()));
                     }
                 }
@@ -156,9 +147,19 @@ public class Graph {
   // length of the shortest path from it to the root. This ArrayList
   // should contain every Node in the graph. Note that 
   // root.getMinDistance() = 0
-  public ArrayList<Node> findEveryShortestPathLength(Node root) {
-	  return null;
-  }
+    public ArrayList<Node> findEveryShortestPathLength(Node root) {
+        root.setMinDistance(0);
+
+	    for (int i=0; i < vertices.size(); i++) {
+            minHeap.buildHeap(vertices);
+            int dist = findShortestPathLength(root,vertices.get(i));
+            vertices.get(i).setMinDistance(dist);
+            minHeap.getMinHeapList().clear();
+        }
+        return vertices;
+    }
+
+//    private void setMaxDistance()
   
   //returns edges and weights in a string.
   public String toString() {
