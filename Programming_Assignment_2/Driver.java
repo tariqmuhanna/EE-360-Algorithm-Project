@@ -98,13 +98,17 @@ public class Driver {
 
 	public static void testRun() {
 		if (testDijkstra) {
-//			allNodeNames.get(3).setMinDistance(0);
+//			allNodeNames.get(0).setMinDistance(0);
 //			testGraph.getHeap().buildHeap(allNodeNames);
-//			System.out.println(testGraph.findShortestPathLength(allNodeNames.get(3),allNodeNames.get(4)));
-
-//			ArrayList<Node> res = testGraph.findAShortestPath(allNodeNames.get(3),allNodeNames.get(0));
-
-			ArrayList<Node> res = testGraph.findEveryShortestPathLength(allNodeNames.get(0));
+//			System.out.println(testGraph.findShortestPathLength(allNodeNames.get(0),allNodeNames.get(0)));
+//			System.out.println(testGraph.findShortestPathLength(allNodeNames.get(0),allNodeNames.get(1)));
+//			System.out.println(testGraph.findShortestPathLength(allNodeNames.get(0),allNodeNames.get(2)));
+//			System.out.println(testGraph.findShortestPathLength(allNodeNames.get(0),allNodeNames.get(3)));
+//			System.out.println(testGraph.findShortestPathLength(allNodeNames.get(0),allNodeNames.get(4)));
+//			System.out.println(testGraph.findShortestPathLength(allNodeNames.get(1),allNodeNames.get(3)));
+//			System.out.println(testGraph.findShortestPathLength(allNodeNames.get(3),allNodeNames.get(0)));
+//			System.out.println(testGraph.findShortestPathLength(allNodeNames.get(4),allNodeNames.get(2)));
+			ArrayList<Node> res = testGraph.findAShortestPath(allNodeNames.get(4),allNodeNames.get(0));
 			if (res!=null) {
 				for (int i = 0; i < res.size(); i++) {
 					System.out.print(res.get(i).getNodeName() + " ");
@@ -113,8 +117,6 @@ public class Driver {
 				System.out.println(testGraph);
 			}
 			else System.out.println("NO");
-
-
 		}
 
 		if (testHeap) {

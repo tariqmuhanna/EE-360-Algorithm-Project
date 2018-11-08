@@ -11,13 +11,17 @@ public class Heap {
 		minHeap = new ArrayList<Node>(); // do not remove
 		ind = new ArrayList<>();
 	}
-	
+
+	public ArrayList<Node> getMinHeapList() {
+		return minHeap;
+	}
+
 	// buildHeap
-  //
-  // Given an ArrayList of Nodes, build a minimum heap keyed on each
-  // Node's minDistance
-  //
-  // Time Complexity Requirement: theta(n)
+	//
+	// Given an ArrayList of Nodes, build a minimum heap keyed on each
+	// Node's minDistance
+	//
+	// Time Complexity Requirement: theta(n)
 	public void buildHeap(ArrayList<Node> nodes) {
 
 		for (int i=0; i<nodes.size(); i++) {
@@ -26,7 +30,7 @@ public class Heap {
 			minHeapify(i);
 //			heapifyDown(i);
 		}
-  	}
+	}
 
 	public void minHeapify(int i) {
 		int parent_idx = i/2;
@@ -54,20 +58,20 @@ public class Heap {
 
 	private int left(int i) { return 2 * i + 1; }
 
-  // insertNode
-  //
-  // Insert a Node into the heap
-  //
-  // Time Complexity Requirement: theta(log(n))
+	// insertNode
+	//
+	// Insert a Node into the heap
+	//
+	// Time Complexity Requirement: theta(log(n))
 	public void insertNode(Node in) {
-	
+
 	}
-	
-  // findMin
-  //
-  // Returns the minimum element of the heap
-  //
-  // Time Complexity Requirement: theta(1)
+
+	// findMin
+	//
+	// Returns the minimum element of the heap
+	//
+	// Time Complexity Requirement: theta(1)
 	public Node findMin() {
 		if (minHeap.size()>0)
 			return minHeap.get(0);
@@ -80,7 +84,7 @@ public class Heap {
 	 * Time Complexity Requirement: theta(log(n))
 	 * @return
 	 */
-  	public Node extractMin() {
+	public Node extractMin() {
 		if (minHeap.size()==1)
 			return minHeap.remove(minHeap.size()-1);
 
@@ -90,41 +94,41 @@ public class Heap {
 		ind.set(last.getNodeName(),0);
 		ind.set(min.getNodeName(),-1);
 		heapifyDown(0);
-    	return min;
-  }
+		return min;
+	}
 
-  private void heapifyDown(int i) {
+	private void heapifyDown(int i) {
 		int left = left(i);
 		int right = right(i);
 		int smallest = -1;
 
-	  // find the smallest key between current node and its children.
-	  if (left <= minHeap.size() - 1 &&
-			  minHeap.get(left).getMinDistance() < minHeap.get(i).getMinDistance()) {
-		  smallest = left;
-	  }
-	  else { smallest = i; }
+		// find the smallest key between current node and its children.
+		if (left <= minHeap.size() - 1 &&
+				minHeap.get(left).getMinDistance() < minHeap.get(i).getMinDistance()) {
+			smallest = left;
+		}
+		else { smallest = i; }
 
-	  if (right <= minHeap.size() - 1 &&
-			  minHeap.get(right).getMinDistance() < minHeap.get(i).getMinDistance()) {
-		  smallest = right;
-	  }
+		if (right <= minHeap.size() - 1 &&
+				minHeap.get(right).getMinDistance() < minHeap.get(i).getMinDistance()) {
+			smallest = right;
+		}
 
-	  // if the smallest key is not the current key then bubble-down it.
-	  if (smallest != i) {
-		  swap(i, smallest);
-		  heapifyDown(smallest);
-	  }
-  }
-	
-  public String toString() {
+		// if the smallest key is not the current key then bubble-down it.
+		if (smallest != i) {
+			swap(i, smallest);
+			heapifyDown(smallest);
+		}
+	}
+
+	public String toString() {
 		String output = "";
 		for(int i = 0; i < minHeap.size(); i++) {
 			output+= minHeap.get(i).getNodeName() + " ";
 		}
 		return output;
 	}
-	
+
 ///////////////////////////////////////////////////////////////////////////////
 //                           DANGER ZONE                                     //
 //                everything below is used for grading                       //
