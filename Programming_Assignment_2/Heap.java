@@ -1,5 +1,6 @@
 package Programming_Assignment_2;
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class Heap {
@@ -23,13 +24,20 @@ public class Heap {
 	//
 	// Time Complexity Requirement: theta(n)
 	public void buildHeap(ArrayList<Node> nodes) {
-
+//		Collections.copy(minHeap,nodes);
 		for (int i=0; i<nodes.size(); i++) {
 			minHeap.add(nodes.get(i));
 			ind.add(i);
-			minHeapify(i);
-//			heapifyDown(i);
 		}
+
+		for (int i = (nodes.size()-1)/2; i>=0; i--)
+			heapifyDown(i);
+//		for (int i=0; i<nodes.size(); i++) {
+//			minHeap.add(nodes.get(i));
+//			ind.add(i);
+//			minHeapify(i);
+////			heapifyDown(i);
+//		}
 	}
 
 	public void minHeapify(int i) {
